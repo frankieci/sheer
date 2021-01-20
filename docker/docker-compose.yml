@@ -1,0 +1,19 @@
+version: "2"
+
+services:
+  agent-stream:
+    image: docker-registry.fankieci-yun.com/flume-agent:1.0.0
+    ports:
+      - 7777:7777
+    environment:
+      FLUME_KAFKA_BOOTSTRAP_SERVERS: 127.0.0.1:9092
+      FLUME_REDIS_HOST: 127.0.0.1
+      FLUME_SINK_HDFS_SERVER: 127.0.0.1:9000
+      JAVA_OPTS: -Xms1G -Xmx1G
+    volumes:
+      - /opt/agent/:/opt/flume/agent-lib/
+      - ./logs:/opt/flume/logs
+    networks:
+      - default
+#      - localhost
+    command: stream
